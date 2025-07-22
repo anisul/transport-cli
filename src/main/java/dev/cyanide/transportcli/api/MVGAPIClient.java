@@ -1,0 +1,47 @@
+package dev.cyanide.transportcli.api;
+
+import dev.cyanide.transportcli.types.Departure;
+import dev.cyanide.transportcli.types.Location;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class MVGAPIClient {
+
+    private final String API_BASE_URL = "https://www.mvg.de";
+
+    private final RestTemplate restTemplate;
+
+    public MVGAPIClient(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    public List<Departure> getDepartures(String stationId, Integer limit, Integer offsetInMinutes) {
+        var url = UriComponentsBuilder.fromHttpUrl(API_BASE_URL)
+                .pathSegment("api", "bgw-pt", "v3", "departures")
+                .queryParam("globalId", stationId)
+                .queryParamIfPresent("limit", limit != null ? Optional.of(limit) : Optional.empty())
+                .queryParamIfPresent("offsetInMinutes", offsetInMinutes != null ? Optional.of(offsetInMinutes) : Optional.empty())
+                .build()
+                .toUriString();
+
+        var response = restTemplate.getForEntity(url, Departure[].class);
+        return List.of(response.getBody());
+    }
+
+    public List<Location> getLocations(String query) {
+        var url = UriComponentsBuilder.fromHttpUrl(API_BASE_URL)
+                .pathSegment("api", "bgw-pt", "v3", "locations")
+                .queryParam("query", query)
+                .queryParam("limit", 5)
+                .build()
+                .toUriString();
+
+        var response = restTemplate.getForEntity(url, Location[].class);
+        return List.of(response.getBody());
+    }
+}
