@@ -38,10 +38,17 @@ public class DepartureCommand implements Runnable {
     )
     private String format;
 
+    @CommandLine.Option(
+            names = {"-t", "--type"},
+            description = "Transport type",
+            defaultValue = "ALL"
+    )
+    private String transportType;
+
     @Override
     public void run() {
         try {
-            var departures = parent.transportService().getDepartures(station, limit, offsetInMinutes);
+            var departures = parent.transportService().getDepartures(station, limit, offsetInMinutes, transportType);
             OutputFormatter.format(departures, format);
         } catch (Exception e) {
             System.err.println("Error getting departures: " + e.getMessage());
