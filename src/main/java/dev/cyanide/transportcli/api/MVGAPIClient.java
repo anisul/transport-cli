@@ -55,20 +55,16 @@ public class MVGAPIClient {
             String destinationStationId,
             String originStationId,
             OffsetDateTime plannedDepartureTime,
-            TransportType transportType,
+            Optional transportTypeOptional,
             boolean routingDateTimeIsArrival
     ) {
         var url = UriComponentsBuilder.fromHttpUrl(API_BASE_URL)
                 .pathSegment("api", "bgw-pt", "v3", "routes")
                 .queryParam("originStationGlobalId", originStationId)
                 .queryParam("destinationStationGlobalId", destinationStationId)
-                .queryParam("plannedDepartureTime", plannedDepartureTime != null
-                        ? plannedDepartureTime.toString() : OffsetDateTime.now().toString())
-                .queryParam("routingDateTimeIsArrival", plannedDepartureTime != null
-                        ? plannedDepartureTime.toString() : OffsetDateTime.now().toString())
-                .queryParamIfPresent("transportTypes", transportType != null
-                        ? Optional.of(transportType) : Optional.empty())
+                .queryParam("plannedDepartureTime", plannedDepartureTime)
                 .queryParam("routingDateTimeIsArrival", routingDateTimeIsArrival)
+                .queryParamIfPresent("transportTypes", transportTypeOptional)
                 .build()
                 .toUriString();
 
