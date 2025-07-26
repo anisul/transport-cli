@@ -40,7 +40,7 @@ public class OutputFormatter {
             );
         }
 
-        System.out.println("└──────────┴─────────────────────────┴─────────────────────────┴────────┴──────────┴─────────┘");
+        System.out.println("└──────────┴─────────────────────────┴─────────────────────────┴────────┴─────────┘");
     }
 
     private static String truncate(String str, int maxLength) {
