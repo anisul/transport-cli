@@ -2,11 +2,13 @@ package dev.cyanide.transportcli.api;
 
 import dev.cyanide.transportcli.types.Departure;
 import dev.cyanide.transportcli.types.Location;
+import dev.cyanide.transportcli.types.Route;
 import dev.cyanide.transportcli.types.TransportType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +28,10 @@ public class MVGAPIClient {
                 .pathSegment("api", "bgw-pt", "v3", "departures")
                 .queryParam("globalId", stationId)
                 .queryParamIfPresent("limit", limit != null ? Optional.of(limit) : Optional.empty())
-                .queryParamIfPresent("offsetInMinutes", offsetInMinutes != null ? Optional.of(offsetInMinutes) : Optional.empty())
-                .queryParamIfPresent("transportTypes", transportType != null ? Optional.of(transportType) : Optional.empty())
+                .queryParamIfPresent("offsetInMinutes", offsetInMinutes != null
+                        ? Optional.of(offsetInMinutes) : Optional.empty())
+                .queryParamIfPresent("transportTypes", transportType != null
+                        ? Optional.of(transportType) : Optional.empty())
                 .build()
                 .toUriString();
 
@@ -44,6 +48,31 @@ public class MVGAPIClient {
                 .toUriString();
 
         var response = restTemplate.getForEntity(url, Location[].class);
+        return List.of(response.getBody());
+    }
+
+    public List<Route> getRoutes(
+            String destinationStationId,
+            String originStationId,
+            OffsetDateTime plannedDepartureTime,
+            TransportType transportType,
+            boolean routingDateTimeIsArrival
+    ) {
+        var url = UriComponentsBuilder.fromHttpUrl(API_BASE_URL)
+                .pathSegment("api", "bgw-pt", "v3", "routes")
+                .queryParam("originStationGlobalId", originStationId)
+                .queryParam("destinationStationGlobalId", destinationStationId)
+                .queryParam("plannedDepartureTime", plannedDepartureTime != null
+                        ? plannedDepartureTime.toString() : OffsetDateTime.now().toString())
+                .queryParam("routingDateTimeIsArrival", plannedDepartureTime != null
+                        ? plannedDepartureTime.toString() : OffsetDateTime.now().toString())
+                .queryParamIfPresent("transportTypes", transportType != null
+                        ? Optional.of(transportType) : Optional.empty())
+                .queryParam("routingDateTimeIsArrival", routingDateTimeIsArrival)
+                .build()
+                .toUriString();
+
+        var response = restTemplate.getForEntity(url, Route[].class);
         return List.of(response.getBody());
     }
 }

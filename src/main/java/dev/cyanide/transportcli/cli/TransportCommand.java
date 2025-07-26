@@ -8,7 +8,7 @@ import picocli.CommandLine;
         mixinStandardHelpOptions = true,
         version = "1.0.0",
         description = "Real-time transportation information CLI tool",
-        subcommands = {DepartureCommand.class},
+        subcommands = {DepartureCommand.class, TransportCommand.class, RouteCommand.class},
         commandListHeading = "%nCommands:%n",
         optionListHeading = "%nOptions:%n",
         footer = {
@@ -28,6 +28,6 @@ public record TransportCommand(TransportService transportService) implements Run
     @Override
     public void run() {
         // Default behavior when no subcommand is provided
-        System.out.println("Transport CLI - use --help to see available commands");
+        // System.out.println("Transport CLI - use --help to see available commands");
     }
 }
