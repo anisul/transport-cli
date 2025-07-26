@@ -21,16 +21,12 @@ public class RouteService {
     public List<Route> getRoutes(
             String destinationStationId,
             String originStationId,
-            OffsetDateTime plannedDepartureTime,
-            TransportType transportType,
+            String transportType,
             boolean routingDateTimeIsArrival
     ) {
+        var plannedDepartureTime = OffsetDateTime.now();
 
-        if (plannedDepartureTime == null) {
-            plannedDepartureTime = OffsetDateTime.now();
-        }
-
-        var transportTypeOptional = transportType != null ? Optional.of(transportType) : Optional.empty();
+        var transportTypeOptional = transportType != null ? Optional.of(TransportType.valueOf(transportType)) : Optional.empty();
 
         return mvgApiClient.getRoutes(
                 destinationStationId,
