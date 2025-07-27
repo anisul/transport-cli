@@ -1,5 +1,6 @@
 package dev.cyanide.transportcli.cli;
 
+import dev.cyanide.transportcli.service.RouteService;
 import dev.cyanide.transportcli.service.TransportService;
 import picocli.CommandLine;
 
@@ -8,7 +9,7 @@ import picocli.CommandLine;
         mixinStandardHelpOptions = true,
         version = "1.0.0",
         description = "Real-time transportation information CLI tool",
-        subcommands = {DepartureCommand.class, TransportCommand.class, RouteCommand.class},
+        subcommands = {DepartureCommand.class, RouteCommand.class},
         commandListHeading = "%nCommands:%n",
         optionListHeading = "%nOptions:%n",
         footer = {
@@ -23,7 +24,7 @@ import picocli.CommandLine;
                 "  exit     - Exit the application"
         }
 )
-public record TransportCommand(TransportService transportService) implements Runnable {
+public record TransportCommand(TransportService transportService, RouteService routeService) implements Runnable {
 
     @Override
     public void run() {

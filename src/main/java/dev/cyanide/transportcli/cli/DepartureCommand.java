@@ -2,6 +2,7 @@ package dev.cyanide.transportcli.cli;
 
 
 import dev.cyanide.transportcli.OutputFormatter;
+import dev.cyanide.transportcli.output.OutputType;
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "departures", description = "Get departures from a station")
@@ -32,13 +33,6 @@ public class DepartureCommand implements Runnable {
     private Integer offsetInMinutes;
 
     @CommandLine.Option(
-            names = {"-f", "--format"},
-            description = "Output format: table, json",
-            defaultValue = "table"
-    )
-    private String format;
-
-    @CommandLine.Option(
             names = {"-t", "--type"},
             description = "Transport type",
             defaultValue = "ALL"
@@ -49,10 +43,9 @@ public class DepartureCommand implements Runnable {
     public void run() {
         try {
             var departures = parent.transportService().getDepartures(station, limit, offsetInMinutes, transportType);
-            OutputFormatter.format(departures, format);
+            OutputFormatter.format(departures, OutputType.DEPARTURES);
         } catch (Exception e) {
             System.err.println("Error getting departures: " + e.getMessage());
-            System.exit(1);
         }
     }
 }

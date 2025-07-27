@@ -1,5 +1,6 @@
 package dev.cyanide.transportcli.cli;
 
+import dev.cyanide.transportcli.service.RouteService;
 import dev.cyanide.transportcli.service.TransportService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -11,10 +12,12 @@ import java.util.Scanner;
 public class TransportCliRunner implements CommandLineRunner {
 
     private final TransportService transportService;
+    private final RouteService routeService;
     private volatile boolean running = true;
 
-    public TransportCliRunner(TransportService transportService) {
+    public TransportCliRunner(TransportService transportService, RouteService routeService) {
         this.transportService = transportService;
+        this.routeService = routeService;
     }
 
     @Override
@@ -66,7 +69,7 @@ public class TransportCliRunner implements CommandLineRunner {
     private void executeCommand(String input) {
         try {
             String[] cmdArgs = parseInput(input);
-            CommandLine commandLine = new CommandLine(new TransportCommand(transportService));
+            CommandLine commandLine = new CommandLine(new TransportCommand(transportService, routeService));
             commandLine.setExecutionStrategy(new CommandLine.RunAll());
             commandLine.setUnmatchedArgumentsAllowed(false);
 
@@ -80,7 +83,7 @@ public class TransportCliRunner implements CommandLineRunner {
             if (input.contains("--help") || input.contains("-h") || input.equalsIgnoreCase("help")) {
                 // Show help for the main command if help was requested
                 try {
-                    CommandLine commandLine = new CommandLine(new TransportCommand(transportService));
+                    CommandLine commandLine = new CommandLine(new TransportCommand(transportService, routeService));
                     commandLine.execute("--help");
                 } catch (Exception helpException) {
                     System.err.println("Could not display help: " + helpException.getMessage());
