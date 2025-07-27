@@ -14,6 +14,8 @@ public class RouteStation {
     String name;
     String place;
     OffsetDateTime plannedDepartureTime;
+    int departureDelayInMinutes;
+    int arrivalDelayInMinutes;
     int platform;
     boolean platformChanged;
     int stationDivaId;
@@ -97,5 +99,21 @@ public class RouteStation {
 
     public void setTransportTypes(List<TransportType> transportTypes) {
         this.transportTypes = transportTypes;
+    }
+
+    public int getDepartureDelayInMinutes() {
+        return departureDelayInMinutes;
+    }
+
+    public void setDepartureDelayInMinutes(int departureDelayInMinutes) {
+        this.departureDelayInMinutes = departureDelayInMinutes;
+    }
+
+    public int getArrivalDelayInMinutes() {
+        return arrivalDelayInMinutes;
+    }
+
+    public void setArrivalDelayInMinutes(int arrivalDelayInMinutes) {
+        this.arrivalDelayInMinutes = arrivalDelayInMinutes;
     }
 }

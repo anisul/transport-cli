@@ -26,7 +26,7 @@ public class RouteService {
     ) {
         var plannedDepartureTime = OffsetDateTime.now();
 
-        var transportTypeOptional = transportType != null ? Optional.of(TransportType.valueOf(transportType)) : Optional.empty();
+        var transportTypeOptional = !transportType.isEmpty() ? Optional.of(TransportType.valueOf(transportType)) : Optional.empty();
 
         return mvgApiClient.getRoutes(
                 destinationStationId,
