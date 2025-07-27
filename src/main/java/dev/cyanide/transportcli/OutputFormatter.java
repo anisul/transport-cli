@@ -1,27 +1,54 @@
 package dev.cyanide.transportcli;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import dev.cyanide.transportcli.output.OutputType;
 import dev.cyanide.transportcli.types.Departure;
+import dev.cyanide.transportcli.types.Route;
 
 import java.util.List;
 
 public class OutputFormatter {
-    private static final ObjectMapper objectMapper = new ObjectMapper()
-            .enable(SerializationFeature.INDENT_OUTPUT);
 
-    public static void format(List<?> data) {
+    public static void format(List<?> data, OutputType outputType) {
         if (data.isEmpty()) {
             System.out.println("No data found.");
             return;
         }
 
-        formatTable(data);
+        if (outputType == OutputType.ROUTES) {
+            formatRoutesTable((List<Route>) data);
+        } else if (outputType == OutputType.DEPARTURES) {
+            formatDeparturesTable((List<Departure>) data);
+        }
     }
 
-    private static void formatTable(List<?> data) {
-        if (data.isEmpty()) return;
-        formatDeparturesTable((List<Departure>) data);
+    private static void formatRoutesTable(List<Route> routes) {
+        System.out.println("──────────────────────────────────────────────────────────────");
+
+        for (var route : routes) {
+            for (var part : route.getParts()) {
+                // print from
+                System.out.printf("│ %-5s │ %-15s │ %-20s │ %-10s │%n",
+                        truncate(part.getLine().getLabel(), 10),
+                        truncate(part.getFrom().getName(), 10),
+                        truncate(part.getFrom().getPlannedDepartureTime().toString(), 10),
+                        truncate("(+" + part.getFrom().getDepartureDelayInMinutes() + " min)", 5)
+                );
+
+                // linebreak
+                System.out.println();
+
+                // print to
+                System.out.printf("│ %-5s │ %-15s │ %-20s │ %-10s │%n",
+                        truncate(" ", 10),
+                        truncate(part.getTo().getName(), 10),
+                        truncate(part.getTo().getPlannedDepartureTime().toString(), 10),
+                        truncate("(+" + part.getTo().getArrivalDelayInMinutes() + " min)", 5)
+                );
+
+                System.out.println("──────────────────────────────────────────────────────────────");
+            }
+        }
+
     }
 
     private static void formatDeparturesTable(List<Departure> departures) {
