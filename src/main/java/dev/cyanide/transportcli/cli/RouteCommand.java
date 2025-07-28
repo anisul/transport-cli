@@ -39,7 +39,7 @@ public class RouteCommand implements Runnable {
             var routes = parent.routeService().getRoutes(sourceStation, destinationStation, transportType, false);
             OutputFormatter.format(routes, OutputType.ROUTES);
         }catch (Exception e) {
-            System.err.println("Error getting departures: " + e.getMessage());
+            System.err.println("Error getting Route: " + e.getMessage());
         }
     }
 }
