@@ -52,8 +52,8 @@ public class MVGAPIClient {
     }
 
     public List<Route> getRoutes(
-            String destinationStationId,
             String originStationId,
+            String destinationStationId,
             OffsetDateTime plannedDepartureTime,
             Optional transportTypeOptional,
             boolean routingDateTimeIsArrival
