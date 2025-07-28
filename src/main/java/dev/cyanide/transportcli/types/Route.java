@@ -1,14 +1,20 @@
 package dev.cyanide.transportcli.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Route {
 
+    @JsonProperty("uniqueId")
     long uniqueId;
+
+    @JsonProperty("distance")
     double distance;
+
+    @JsonProperty("parts")
     List<RoutePart> parts;
 
     public long getUniqueId() {

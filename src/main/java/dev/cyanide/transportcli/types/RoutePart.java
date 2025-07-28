@@ -1,23 +1,22 @@
 package dev.cyanide.transportcli.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RoutePart {
 
-    String changeStatus;
+    @JsonProperty("distance")
     double distance;
+
+    @JsonProperty("from")
     RouteStation from;
+
+    @JsonProperty("line")
     Line line;
+
+    @JsonProperty("to")
     RouteStation to;
-
-    public String getChangeStatus() {
-        return changeStatus;
-    }
-
-    public void setChangeStatus(String changeStatus) {
-        this.changeStatus = changeStatus;
-    }
 
     public double getDistance() {
         return distance;
