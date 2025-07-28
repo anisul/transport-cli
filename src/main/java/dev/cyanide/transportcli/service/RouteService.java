@@ -19,8 +19,8 @@ public class RouteService {
     }
 
     public List<Route> getRoutes(
-            String destinationStationId,
             String originStationId,
+            String destinationStationId,
             String transportType,
             boolean routingDateTimeIsArrival
     ) {
@@ -29,8 +29,8 @@ public class RouteService {
         var transportTypeOptional = !transportType.isEmpty() ? Optional.of(TransportType.valueOf(transportType)) : Optional.empty();
 
         return mvgApiClient.getRoutes(
-                destinationStationId,
                 originStationId,
+                destinationStationId,
                 plannedDepartureTime,
                 transportTypeOptional,
                 routingDateTimeIsArrival);
