@@ -4,10 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RouteStation {
+
+    @JsonProperty("departureDelayInMinutes")
+    int departureDelayInMinutes;
+
+    @JsonProperty("arrivalDelayInMinutes")
+    int arrivalDelayInMinutes;
 
     @JsonProperty("isViaStop")
     boolean isViaStop;
@@ -32,6 +40,22 @@ public class RouteStation {
 
     @JsonProperty("transportTypes")
     List<TransportType> transportTypes;
+
+    public int getDepartureDelayInMinutes() {
+        return departureDelayInMinutes;
+    }
+
+    public void setDepartureDelayInMinutes(int departureDelayInMinutes) {
+        this.departureDelayInMinutes = departureDelayInMinutes;
+    }
+
+    public int getArrivalDelayInMinutes() {
+        return arrivalDelayInMinutes;
+    }
+
+    public void setArrivalDelayInMinutes(int arrivalDelayInMinutes) {
+        this.arrivalDelayInMinutes = arrivalDelayInMinutes;
+    }
 
     public boolean isViaStop() {
         return isViaStop;
@@ -75,6 +99,11 @@ public class RouteStation {
 
     public OffsetDateTime getPlannedDeparture() {
         return plannedDeparture;
+    }
+
+    public String getLocalPlannedDepartureIn24HrAsString() {
+        var zonedDateTime = plannedDeparture.atZoneSameInstant(ZoneId.systemDefault());
+        return zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     public void setPlannedDeparture(OffsetDateTime plannedDeparture) {
