@@ -30,8 +30,8 @@ public class OutputFormatter {
                 System.out.printf("│ %-5s │ %-15s │ %-20s │ %-10s │%n",
                         truncate(part.getLine().getLabel(), 10),
                         truncate(part.getFrom().getName(), 10),
-                        truncate(part.getFrom().getPlannedDepartureTime().toString(), 10),
-                        truncate("(+" + part.getFrom().getDepartureDelayInMinutes() + " min)", 5)
+                        truncate(part.getFrom().getPlannedDeparture().toString(), 10),
+                        truncate("(+ test min)", 5)
                 );
 
                 // linebreak
@@ -41,8 +41,8 @@ public class OutputFormatter {
                 System.out.printf("│ %-5s │ %-15s │ %-20s │ %-10s │%n",
                         truncate(" ", 10),
                         truncate(part.getTo().getName(), 10),
-                        truncate(part.getTo().getPlannedDepartureTime().toString(), 10),
-                        truncate("(+" + part.getTo().getArrivalDelayInMinutes() + " min)", 5)
+                        truncate(part.getTo().getPlannedDeparture().toString(), 10),
+                        truncate("(+" + part.getTo().getPlannedDeparture().toString() + " min)", 5)
                 );
 
                 System.out.println("──────────────────────────────────────────────────────────────");

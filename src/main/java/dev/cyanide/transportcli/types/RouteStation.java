@@ -1,6 +1,7 @@
 package dev.cyanide.transportcli.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -8,17 +9,28 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RouteStation {
 
+    @JsonProperty("isViaStop")
     boolean isViaStop;
+
+    @JsonProperty("latitude")
     double latitude;
+
+    @JsonProperty("longitude")
     double longitude;
+
+    @JsonProperty("name")
     String name;
+
+    @JsonProperty("place")
     String place;
-    OffsetDateTime plannedDepartureTime;
-    int departureDelayInMinutes;
-    int arrivalDelayInMinutes;
-    int platform;
-    boolean platformChanged;
+
+    @JsonProperty("plannedDeparture")
+    OffsetDateTime plannedDeparture;
+
+    @JsonProperty("stationDivaId")
     int stationDivaId;
+
+    @JsonProperty("transportTypes")
     List<TransportType> transportTypes;
 
     public boolean isViaStop() {
@@ -61,28 +73,12 @@ public class RouteStation {
         this.place = place;
     }
 
-    public OffsetDateTime getPlannedDepartureTime() {
-        return plannedDepartureTime;
+    public OffsetDateTime getPlannedDeparture() {
+        return plannedDeparture;
     }
 
-    public void setPlannedDepartureTime(OffsetDateTime plannedDepartureTime) {
-        this.plannedDepartureTime = plannedDepartureTime;
-    }
-
-    public int getPlatform() {
-        return platform;
-    }
-
-    public void setPlatform(int platform) {
-        this.platform = platform;
-    }
-
-    public boolean isPlatformChanged() {
-        return platformChanged;
-    }
-
-    public void setPlatformChanged(boolean platformChanged) {
-        this.platformChanged = platformChanged;
+    public void setPlannedDeparture(OffsetDateTime plannedDeparture) {
+        this.plannedDeparture = plannedDeparture;
     }
 
     public int getStationDivaId() {
@@ -99,21 +95,5 @@ public class RouteStation {
 
     public void setTransportTypes(List<TransportType> transportTypes) {
         this.transportTypes = transportTypes;
-    }
-
-    public int getDepartureDelayInMinutes() {
-        return departureDelayInMinutes;
-    }
-
-    public void setDepartureDelayInMinutes(int departureDelayInMinutes) {
-        this.departureDelayInMinutes = departureDelayInMinutes;
-    }
-
-    public int getArrivalDelayInMinutes() {
-        return arrivalDelayInMinutes;
-    }
-
-    public void setArrivalDelayInMinutes(int arrivalDelayInMinutes) {
-        this.arrivalDelayInMinutes = arrivalDelayInMinutes;
     }
 }
