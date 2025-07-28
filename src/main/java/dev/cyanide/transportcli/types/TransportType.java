@@ -7,7 +7,9 @@ public enum TransportType {
     SBAHN,
     BUS,
     REGIONAL_BUS,
-    BAH;
+    BAH,
+    BAHN,
+    PEDESTRIAN;
 
     /**
      * Returns the enum constant for the given string, ignoring case.
