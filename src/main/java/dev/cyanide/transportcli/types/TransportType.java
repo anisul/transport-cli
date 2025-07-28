@@ -7,7 +7,6 @@ public enum TransportType {
     SBAHN,
     BUS,
     REGIONAL_BUS,
-    BAH,
     BAHN,
     PEDESTRIAN;
 
