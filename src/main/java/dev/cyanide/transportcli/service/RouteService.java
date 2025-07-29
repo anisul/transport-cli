@@ -13,24 +13,29 @@ import java.util.Optional;
 public class RouteService {
 
     private final MVGAPIClient mvgApiClient;
+    private final LocationService locationService;
 
-    public RouteService(MVGAPIClient mvgApiClient) {
+    public RouteService(MVGAPIClient mvgApiClient, LocationService locationService) {
         this.mvgApiClient = mvgApiClient;
+        this.locationService = locationService;
     }
 
     public List<Route> getRoutes(
-            String originStationId,
-            String destinationStationId,
+            String originStationQuery,
+            String destinationStationQuery,
             String transportType,
             boolean routingDateTimeIsArrival
     ) {
         var plannedDepartureTime = OffsetDateTime.now();
 
+        var originStationLocation = locationService.getNearestStationLocation(originStationQuery);
+        var sourceStationLocation = locationService.getNearestStationLocation(destinationStationQuery);
+
         var transportTypeOptional = !transportType.isEmpty() ? Optional.of(TransportType.valueOf(transportType)) : Optional.empty();
 
         return mvgApiClient.getRoutes(
-                originStationId,
-                destinationStationId,
+                originStationLocation.getGlobalId(),
+                sourceStationLocation.getGlobalId(),
                 plannedDepartureTime,
                 transportTypeOptional,
                 routingDateTimeIsArrival);

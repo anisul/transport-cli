@@ -1,7 +1,6 @@
 package dev.cyanide.transportcli.cli;
 
-
-import dev.cyanide.transportcli.OutputFormatter;
+import dev.cyanide.transportcli.output.OutputFormatter;
 import dev.cyanide.transportcli.output.OutputType;
 import picocli.CommandLine;
 
@@ -16,14 +15,14 @@ public class RouteCommand implements Runnable {
             description = "Source station name",
             required = true
     )
-    private String sourceStation;
+    private String sourceStationQuery;
 
     @CommandLine.Option(
             names = {"-d", "--destination"},
             description = "Destination station name",
             required = true
     )
-    private String destinationStation;
+    private String destinationStationQuery;
 
     @CommandLine.Option(
             names = {"-t", "--type"},
@@ -36,7 +35,12 @@ public class RouteCommand implements Runnable {
     @Override
     public void run() {
         try {
-            var routes = parent.routeService().getRoutes(sourceStation, destinationStation, transportType, false);
+            var routes = parent.routeService().getRoutes(
+                            sourceStationQuery,
+                            destinationStationQuery,
+                            transportType,
+                            false);
+
             OutputFormatter.format(routes, OutputType.ROUTES);
         }catch (Exception e) {
             System.err.println("Error getting Route: " + e.getMessage());
