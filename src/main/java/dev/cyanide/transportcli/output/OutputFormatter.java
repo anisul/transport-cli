@@ -22,7 +22,7 @@ public class OutputFormatter {
     }
 
     private static void formatRoutesTable(List<Route> routes) {
-        int optionNumber = 1;
+        var optionNumber = 1;
         for (Route route : routes) {
             printRouteOption(route, optionNumber++);
         }
@@ -31,7 +31,7 @@ public class OutputFormatter {
     private static void printRouteOption(Route route, int optionNumber) {
         System.out.println("Option " + optionNumber + ":");
 
-        List<RoutePart> parts = route.getParts();
+        var parts = route.getParts();
         for (int i = 0; i < parts.size(); i++) {
             boolean isFirstPart = (i == 0);
             boolean isLastPart = (i == parts.size() - 1);
@@ -56,7 +56,7 @@ public class OutputFormatter {
     }
 
     private static void printRoutePartFromRow(RoutePart part) {
-        String delayText = formatDelayText(part.getFrom().getDepartureDelayInMinutes());
+        var delayText = formatDelayText(part.getFrom().getDepartureDelayInMinutes());
         System.out.printf("│ %-10s │ %-30s │ %-10s %-10s │%n",
                 truncate(part.getLine().getLabel(), 10),
                 truncate(part.getFrom().getName(), 30),
@@ -66,7 +66,7 @@ public class OutputFormatter {
     }
 
     private static void printRoutePartToRow(RoutePart part) {
-        String delayText = formatDelayText(part.getTo().getArrivalDelayInMinutes());
+        var delayText = formatDelayText(part.getTo().getArrivalDelayInMinutes());
         System.out.printf("│ %-10s │ %-30s │ %-10s %-10s │%n",
                 truncate("", 10),
                 truncate(part.getTo().getName(), 30),
@@ -92,7 +92,7 @@ public class OutputFormatter {
     }
 
     private static void printDepartureRow(Departure departure) {
-        String delayText = formatDepartureDelayText(departure.getDelayInMinutes());
+        var delayText = formatDepartureDelayText(departure.getDelayInMinutes());
         System.out.printf("│ %-8s │ %-23s │ %-23s │ %-6s │ %-7s │%n",
                 truncate(departure.getLabel(), 8),
                 truncate(departure.getDestination(), 23),
