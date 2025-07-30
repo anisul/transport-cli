@@ -29,12 +29,10 @@ public class TransportCliRunner implements CommandLineRunner {
         System.out.println("Type 'help' for available commands or 'exit' to quit.");
         System.out.println();
 
-        // If arguments are provided, execute them first
         if (args.length > 0) {
             executeCommand(String.join(" ", args));
         }
 
-        // Start interactive mode
         startInteractiveMode();
     }
 
@@ -60,7 +58,7 @@ public class TransportCliRunner implements CommandLineRunner {
             }
 
             executeCommand(input);
-            System.out.println(); // Add spacing between commands
+            System.out.println();
         }
 
         scanner.close();
@@ -81,7 +79,7 @@ public class TransportCliRunner implements CommandLineRunner {
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
             if (input.contains("--help") || input.contains("-h") || input.equalsIgnoreCase("help")) {
-                // Show help for the main command if help was requested
+
                 try {
                     CommandLine commandLine = new CommandLine(new TransportCommand(transportService, routeService));
                     commandLine.execute("--help");
@@ -93,7 +91,6 @@ public class TransportCliRunner implements CommandLineRunner {
     }
 
     private String[] parseInput(String input) {
-        // Simple command line parsing - you might want to use a more sophisticated parser
         return input.trim().split("\\s+");
     }
 
@@ -106,7 +103,6 @@ public class TransportCliRunner implements CommandLineRunner {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
         } catch (Exception e) {
-            // Fallback: print newlines
             for (int i = 0; i < 50; i++) {
                 System.out.println();
             }
