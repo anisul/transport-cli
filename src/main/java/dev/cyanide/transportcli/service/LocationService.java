@@ -2,7 +2,6 @@ package dev.cyanide.transportcli.service;
 
 import dev.cyanide.transportcli.api.MVGAPIClient;
 import dev.cyanide.transportcli.types.Location;
-import dev.cyanide.transportcli.types.LocationType;
 import org.springframework.stereotype.Service;
 
 @Service
