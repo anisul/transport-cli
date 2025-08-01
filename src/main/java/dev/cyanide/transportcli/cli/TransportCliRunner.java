@@ -66,12 +66,13 @@ public class TransportCliRunner implements CommandLineRunner {
 
     private void executeCommand(String input) {
         try {
-            String[] cmdArgs = parseInput(input);
-            CommandLine commandLine = new CommandLine(new TransportCommand(transportService, routeService));
+            var cmdArgs = parseInput(input);
+            var commandLine = new CommandLine(new TransportCommand(transportService, routeService));
+
             commandLine.setExecutionStrategy(new CommandLine.RunAll());
             commandLine.setUnmatchedArgumentsAllowed(false);
 
-            int exitCode = commandLine.execute(cmdArgs);
+            var exitCode = commandLine.execute(cmdArgs);
 
             if (exitCode != 0 && !input.contains("--help") && !input.contains("-h")) {
                 System.err.println("Command failed with exit code: " + exitCode);
@@ -103,7 +104,7 @@ public class TransportCliRunner implements CommandLineRunner {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
         } catch (Exception e) {
-            for (int i = 0; i < 50; i++) {
+            for (var i = 0; i < 50; i++) {
                 System.out.println();
             }
         }

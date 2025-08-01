@@ -23,7 +23,7 @@ public class OutputFormatter {
 
     private static void formatRoutesTable(List<Route> routes) {
         var optionNumber = 1;
-        for (Route route : routes) {
+        for (var route : routes) {
             printRouteOption(route, optionNumber++);
         }
     }
@@ -129,7 +129,10 @@ public class OutputFormatter {
     }
 
     private static String truncate(String str, int maxLength) {
-        if (str == null) return "";
+        if (str == null) {
+            return "";
+        }
+
         return str.length() <= maxLength ? str : str.substring(0, maxLength - 3) + "...";
     }
 
