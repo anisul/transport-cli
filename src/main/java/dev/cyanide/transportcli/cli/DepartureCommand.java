@@ -1,6 +1,5 @@
 package dev.cyanide.transportcli.cli;
 
-
 import dev.cyanide.transportcli.output.OutputFormatter;
 import dev.cyanide.transportcli.output.OutputType;
 import picocli.CommandLine;

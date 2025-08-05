@@ -33,8 +33,8 @@ public class OutputFormatter {
 
         var parts = route.getParts();
         for (int i = 0; i < parts.size(); i++) {
-            boolean isFirstPart = (i == 0);
-            boolean isLastPart = (i == parts.size() - 1);
+            var isFirstPart = (i == 0);
+            var isLastPart = (i == parts.size() - 1);
 
             printRoutePart(parts.get(i), isFirstPart, isLastPart);
         }
