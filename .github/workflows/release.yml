@@ -1,0 +1,183 @@
+name: Release CLI Application
+
+on:
+  push:
+    tags:
+      - 'v*'  # Triggers on version tags like v1.0.0, v2.1.3
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Extract version from tag
+        id: extract_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Run tests
+        run: ./gradlew clean test
+
+      - name: Build executable JAR
+        run: ./gradlew bootJar
+
+      - name: Create distribution packages
+        run: |
+          mkdir -p dist
+          
+          # Copy the main JAR
+          cp build/libs/*.jar dist/transport-cli.jar
+          
+          # Create Unix shell script wrapper
+          cat > dist/transport-cli << 'EOF'
+          #!/bin/bash
+          # Munich Transport CLI
+          SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+          exec java -jar "$SCRIPT_DIR/transport-cli.jar" "$@"
+          EOF
+          chmod +x dist/transport-cli
+          
+          # Create Windows batch script wrapper
+          cat > dist/transport-cli.bat << 'EOF'
+          @echo off
+          rem Munich Transport CLI
+          set SCRIPT_DIR=%~dp0
+          java -jar "%SCRIPT_DIR%transport-cli.jar" %*
+          EOF
+          
+          # Create README for the release
+          cat > dist/README.txt << EOF
+          Munich Transport CLI v${{ steps.extract_version.outputs.VERSION }}
+          
+          Requirements:
+          - Java 17 or higher
+          
+          Usage:
+          
+          Linux/macOS:
+          ./transport-cli --help
+          
+          Windows:
+          transport-cli.bat --help
+          
+          Direct JAR:
+          java -jar transport-cli.jar --help
+          
+          For more information, visit:
+          https://github.com/${{ github.repository }}
+          EOF
+
+      - name: Create platform packages
+        run: |
+          cd dist
+          
+          # Create Linux/macOS tarball
+          tar -czf transport-cli-${{ steps.extract_version.outputs.VERSION }}-unix.tar.gz \
+            transport-cli transport-cli.jar README.txt
+          
+          # Create Windows ZIP
+          zip -r transport-cli-${{ steps.extract_version.outputs.VERSION }}-windows.zip \
+            transport-cli.bat transport-cli.jar README.txt
+          
+          # Create standalone JAR with version
+          cp transport-cli.jar transport-cli-${{ steps.extract_version.outputs.VERSION }}.jar
+
+      - name: Generate checksums
+        run: |
+          cd dist
+          sha256sum *.tar.gz *.zip transport-cli-${{ steps.extract_version.outputs.VERSION }}.jar > checksums.txt
+
+      - name: Create Release Notes
+        id: release_notes
+        run: |
+          cat > release_notes.md << EOF
+          ## Munich Transport CLI v${{ steps.extract_version.outputs.VERSION }}
+          
+          A Spring Boot CLI application for accessing Munich public transport information via MVG API.
+          
+          ### 📦 Installation Options
+          
+          #### Option 1: Download and Run (Requires Java 21+)
+          \`\`\`bash
+          # Download the JAR file
+          wget https://github.com/${{ github.repository }}/releases/download/v${{ steps.extract_version.outputs.VERSION }}/transport-cli-${{ steps.extract_version.outputs.VERSION }}.jar
+          
+          # Run directly
+          java -jar transport-cli-${{ steps.extract_version.outputs.VERSION }}.jar --help
+          \`\`\`
+          
+          #### Option 2: Unix/Linux/macOS Package
+          \`\`\`bash
+          # Download and extract
+          wget https://github.com/${{ github.repository }}/releases/download/v${{ steps.extract_version.outputs.VERSION }}/transport-cli-${{ steps.extract_version.outputs.VERSION }}-unix.tar.gz
+          tar -xzf transport-cli-${{ steps.extract_version.outputs.VERSION }}-unix.tar.gz
+          
+          # Run the CLI
+          ./transport-cli --help
+          
+          # Optional: Add to your PATH
+          sudo cp transport-cli transport-cli.jar /usr/local/bin/
+          \`\`\`
+          
+          #### Option 3: Windows Package
+          1. Download \`transport-cli-${{ steps.extract_version.outputs.VERSION }}-windows.zip\`
+          2. Extract the ZIP file
+          3. Run: \`transport-cli.bat --help\`
+          
+          ### 🚀 Features
+          - Real-time departure information
+          - Route planning between stations  
+          - Support for all Munich transport types (U-Bahn, S-Bahn, Bus, Tram)
+          - Location-based station search
+          
+          ### 🔒 File Verification
+          Download \`checksums.txt\` to verify file integrity with:
+          \`\`\`bash
+          sha256sum -c checksums.txt
+          \`\`\`
+          
+          ### 📋 Requirements
+          - Java 21 or higher
+          
+          ### 🐛 Issues & Support
+          Report issues at: https://github.com/${{ github.repository }}/issues
+          EOF
+          
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+          cat release_notes.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.extract_version.outputs.VERSION }}
+          name: Transport CLI v${{ steps.extract_version.outputs.VERSION }}
+          body: ${{ steps.release_notes.outputs.RELEASE_NOTES }}
+          draft: false
+          prerelease: false
+          files: |
+            dist/transport-cli-${{ steps.extract_version.outputs.VERSION }}-unix.tar.gz
+            dist/transport-cli-${{ steps.extract_version.outputs.VERSION }}-windows.zip
+            dist/transport-cli-${{ steps.extract_version.outputs.VERSION }}.jar
+            dist/checksums.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
