@@ -68,7 +68,7 @@ jobs:
           Munich Transport CLI v${{ steps.extract_version.outputs.VERSION }}
           
           Requirements:
-          - Java 17 or higher
+          - Java 21 or higher
           
           Usage:
           
@@ -113,7 +113,7 @@ jobs:
           
           A Spring Boot CLI application for accessing Munich public transport information via MVG API.
           
-          ### 📦 Installation Options
+          ### Installation Options
           
           #### Option 1: Download and Run (Requires Java 21+)
           \`\`\`bash
@@ -142,22 +142,22 @@ jobs:
           2. Extract the ZIP file
           3. Run: \`transport-cli.bat --help\`
           
-          ### 🚀 Features
+          ### Features
           - Real-time departure information
           - Route planning between stations  
           - Support for all Munich transport types (U-Bahn, S-Bahn, Bus, Tram)
           - Location-based station search
           
-          ### 🔒 File Verification
+          ### File Verification
           Download \`checksums.txt\` to verify file integrity with:
           \`\`\`bash
           sha256sum -c checksums.txt
           \`\`\`
           
-          ### 📋 Requirements
+          ### Requirements
           - Java 21 or higher
           
-          ### 🐛 Issues & Support
+          ### Issues & Support
           Report issues at: https://github.com/${{ github.repository }}/issues
           EOF
           
