@@ -179,5 +179,3 @@ jobs:
             dist/transport-cli-${{ steps.extract_version.outputs.VERSION }}-windows.zip
             dist/transport-cli-${{ steps.extract_version.outputs.VERSION }}.jar
             dist/checksums.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
