@@ -22,13 +22,6 @@ public class TransportCliRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("===========================================");
-        System.out.println("    Transport CLI v1.0.0");
-        System.out.println("    Real-time transportation information");
-        System.out.println("===========================================");
-        System.out.println("Type 'help' for available commands or 'exit' to quit.");
-        System.out.println();
-
         if (args.length > 0) {
             executeCommand(String.join(" ", args));
         }
@@ -37,7 +30,7 @@ public class TransportCliRunner implements CommandLineRunner {
     }
 
     private void startInteractiveMode() {
-        Scanner scanner = new Scanner(System.in);
+        var scanner = new Scanner(System.in);
 
         while (running) {
             System.out.print("transport-cli> ");
@@ -48,7 +41,6 @@ public class TransportCliRunner implements CommandLineRunner {
             }
 
             if (input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("quit")) {
-                System.out.println("Goodbye!");
                 break;
             }
 
@@ -82,7 +74,7 @@ public class TransportCliRunner implements CommandLineRunner {
             if (input.contains("--help") || input.contains("-h") || input.equalsIgnoreCase("help")) {
 
                 try {
-                    CommandLine commandLine = new CommandLine(new TransportCommand(transportService, routeService));
+                    var commandLine = new CommandLine(new TransportCommand(transportService, routeService));
                     commandLine.execute("--help");
                 } catch (Exception helpException) {
                     System.err.println("Could not display help: " + helpException.getMessage());
