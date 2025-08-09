@@ -31,6 +31,10 @@ public class RouteService {
         var originStationLocation = locationService.getNearestStationLocation(originStationQuery);
         var sourceStationLocation = locationService.getNearestStationLocation(destinationStationQuery);
 
+        if (originStationLocation == null || sourceStationLocation == null) {
+            return List.of();
+        }
+
         var transportTypeOptional = !transportType.isEmpty() ? Optional.of(TransportType.valueOf(transportType)) : Optional.empty();
 
         return mvgApiClient.getRoutes(
