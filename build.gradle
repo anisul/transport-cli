@@ -27,16 +27,12 @@ repositories {
 }
 
 dependencies {
-	// Spring Boot Starters
 	implementation ('org.springframework.boot:spring-boot-starter-web') {
 		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 	}
 
-	// PicoCLI for command line interface
 	implementation 'info.picocli:picocli-spring-boot-starter:4.7.5'
 	annotationProcessor 'info.picocli:picocli-codegen:4.7.5'
-
-	// JSON Processing
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
