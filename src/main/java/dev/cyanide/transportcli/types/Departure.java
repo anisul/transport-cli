@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -73,6 +74,12 @@ public class Departure {
     private int tripCode;
 
     public Departure() {
+    }
+
+    public String getPlannedDepartureTimeIn24HrAsString() {
+        return Instant.ofEpochMilli(plannedDepartureTime)
+                .atZone(ZoneId.systemDefault())
+                .format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     public long getPlannedDepartureTime() {

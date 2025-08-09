@@ -86,24 +86,24 @@ public class OutputFormatter {
     }
 
     private static void printDepartureTableHeader() {
-        System.out.println("┌──────────┬─────────────────────────┬─────────────────────────┬────────┬─────────┐");
-        System.out.println("│   Line   │       Destination       │ Departure               │  Type  │  Delay  │");
-        System.out.println("├──────────┼─────────────────────────┼─────────────────────────┼────────┼─────────┤");
+        System.out.println("┌──────────┬────────┬───────────────────────────┬───────────────────┐");
+        System.out.println("│ Line     │  Type  │ Destination               │ Departure         │");
+        System.out.println("├──────────┼────────┼───────────────────────────┼───────────────────┤");
     }
 
     private static void printDepartureRow(Departure departure) {
         var delayText = formatDepartureDelayText(departure.getDelayInMinutes());
-        System.out.printf("│ %-8s │ %-23s │ %-23s │ %-6s │ %-7s │%n",
+        System.out.printf("│ %-8s │ %-6s │ %-25s │ %-6s %10s │%n",
                 truncate(departure.getLabel(), 8),
-                truncate(departure.getDestination(), 23),
-                truncate(departure.getPlannedDepartureTimeAsLocalDateTime().toString(), 23),
                 truncate(departure.getTransportType(), 6),
-                delayText
+                truncate(departure.getDestination(), 25),
+                truncate(departure.getPlannedDepartureTimeIn24HrAsString(), 6),
+                truncate(delayText, 10)
         );
     }
 
     private static void printDepartureTableFooter() {
-        System.out.println("└──────────┴─────────────────────────┴─────────────────────────┴────────┴─────────┘");
+        System.out.println("└──────────┴────────┴───────────────────────────┴───────────────────┘");
     }
 
     private static void printTableBorder(BorderType borderType) {
