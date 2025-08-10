@@ -13,23 +13,11 @@ A Spring Boot CLI application for accessing Munich public transport information 
 - 🖥️ **Cross-platform** - Works on Windows, macOS, and Linux
 
 ## Requirements
-
-- Java 21 or higher
 - Internet connection for real-time data
 
 ## Installation
 
-### Option 1: Download and Run (Requires Java 21+)
-
-```bash
-# Download the JAR file
-wget https://github.com/anisul/transport-cli/releases/download/v1.1.0/transport-cli-1.1.0.jar
-
-# Run directly
-java -jar transport-cli-1.1.0.jar --help
-```
-
-### Option 2: Unix/Linux/macOS Package
+### Option 1: Unix/Linux/macOS Package
 
 ```bash
 # Download and extract
@@ -43,11 +31,21 @@ tar -xzf transport-cli-1.1.0-unix.tar.gz
 sudo cp transport-cli transport-cli.jar /usr/local/bin/
 ```
 
-### Option 3: Windows Package
+### Option 2: Windows Package
 
 1. Download `transport-cli-1.1.0-windows.zip` from the [releases page](https://github.com/anisul/transport-cli/releases)
 2. Extract the ZIP file
 3. Run: `transport-cli.bat --help`
+
+### Option 3: Download and Run (Requires Java 21+)
+
+```bash
+# Download the JAR file
+wget https://github.com/anisul/transport-cli/releases/download/v1.1.0/transport-cli-1.1.0.jar
+
+# Run directly
+java -jar transport-cli-1.1.0.jar --help
+```
 
 ### File Verification
 
