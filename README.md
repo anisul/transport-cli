@@ -24,8 +24,8 @@ A Spring Boot CLI application for accessing Munich public transport information 
 
 ```bash
 # Download and extract
-wget https://github.com/anisul/transport-cli/releases/download/v1.2.0/transport-cli-1.2.0-unix.tar.gz
-tar -xzf transport-cli-1.2.0-unix.tar.gz
+wget https://github.com/anisul/transport-cli/releases/download/v1.3.0/transport-cli-1.3.0-unix.tar.gz
+tar -xzf transport-cli-1.3.0-unix.tar.gz
 
 # Run the CLI
 ./transport-cli --help
@@ -36,7 +36,7 @@ sudo cp transport-cli transport-cli.jar /usr/local/bin/
 
 ### Option 2: Windows Package
 
-1. Download `transport-cli-1.2.0-windows.zip` from the [releases page](https://github.com/anisul/transport-cli/releases)
+1. Download `transport-cli-1.3.0-windows.zip` from the [releases page](https://github.com/anisul/transport-cli/releases)
 2. Extract the ZIP file
 3. Run: `transport-cli.bat --help`
 
@@ -44,10 +44,10 @@ sudo cp transport-cli transport-cli.jar /usr/local/bin/
 
 ```bash
 # Download the JAR file
-wget https://github.com/anisul/transport-cli/releases/download/v1.2.0/transport-cli-1.2.0.jar
+wget https://github.com/anisul/transport-cli/releases/download/v1.3.0/transport-cli-1.3.0.jar
 
 # Run directly
-java -jar transport-cli-1.2.0.jar --help
+java -jar transport-cli-1.3.0.jar --help
 ```
 
 ### File Verification
@@ -146,4 +146,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Latest Release**: [v1.2.0](https://github.com/anisul/transport-cli/releases/latest) | **Issues**: [Report here](https://github.com/anisul/transport-cli/issues) | **License**: [MIT](LICENSE)
+**Latest Release**: [v1.3.0](https://github.com/anisul/transport-cli/releases/latest) | **Issues**: [Report here](https://github.com/anisul/transport-cli/issues) | **License**: [MIT](LICENSE)

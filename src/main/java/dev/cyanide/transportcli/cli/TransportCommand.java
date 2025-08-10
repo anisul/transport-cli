@@ -8,15 +8,15 @@ import picocli.CommandLine;
         name = "transport-cli",
         mixinStandardHelpOptions = true,
         version = "1.0.0",
-        description = "Real-time transportation information CLI tool",
+        description = "Real-time MUNICH public transportation information CLI tool",
         subcommands = {DepartureCommand.class, RouteCommand.class},
         commandListHeading = "%nCommands:%n",
         optionListHeading = "%nOptions:%n",
         footer = {
                 "",
                 "Examples:",
-                "  departures -s \"Central Station\" -l 10",
-                "  departures --station \"Main Street\" --format json",
+                "  departures -s Marienplatz -l 5",
+                "  route -s Marienplatz -d Haar -t SBAHN",
                 "",
                 "Interactive commands:",
                 "  help     - Show this help message",
@@ -29,6 +29,5 @@ public record TransportCommand(TransportService transportService, RouteService r
     @Override
     public void run() {
         // Default behavior when no subcommand is provided
-        // System.out.println("Transport CLI - use --help to see available commands");
     }
 }
