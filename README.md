@@ -24,7 +24,7 @@ A Spring Boot CLI application for accessing Munich public transport information 
 
 ```bash
 # Download and extract
-wget https://github.com/anisul/transport-cli/releases/download/v1.1.0/transport-cli-1.2.0-unix.tar.gz
+wget https://github.com/anisul/transport-cli/releases/download/v1.2.0/transport-cli-1.2.0-unix.tar.gz
 tar -xzf transport-cli-1.2.0-unix.tar.gz
 
 # Run the CLI
