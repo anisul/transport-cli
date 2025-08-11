@@ -15,6 +15,10 @@ A Spring Boot CLI application for accessing Munich public transport information 
 - 🚊 **Full transport support** - U-Bahn, S-Bahn, Bus, and Tram coverage
 - 🖥️ **Cross-platform** - Works on Windows, macOS, and Linux
 
+<img src="./doc/ss-3.png" width="70%" alt="">
+<img src="./doc/ss-2.png" width="70%" alt="">
+<img src="./doc/ss-1.png" width="70%" alt="">
+
 ## Requirements
 - Internet connection for real-time data
 
